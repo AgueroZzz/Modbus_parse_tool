@@ -8,9 +8,8 @@
 #include <QPushButton>
 #include <QByteArray>
 #include <QMessageBox>
+#include <QPair>
 #include <parse/parser.h>
-#include <parse/req_frame_parse.h>
-#include <parse/rsp_frame_parse.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -35,11 +34,10 @@ public:
 
 public slots:
     void slot_button_clicked();
-    void slot_display_data(const QList<QStringList>& data, const QString& type);
+    void slot_display_data(const QList<QStringList>& data);
 
 signals:
-    void sig_parse_frame();
-    void sig_display_data(const QList<QStringList>& data, const QString& type);
+    void sig_display_data(const QList<QStringList>& data);
 
 private:
     Ui::Widget *ui;

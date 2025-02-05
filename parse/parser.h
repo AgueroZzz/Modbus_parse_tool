@@ -7,16 +7,16 @@
 #include <QRegularExpression>
 #include <QDebug>
 #include <QMap>
+#include <QtEndian>
 
 class parser : public QObject
 {
     Q_OBJECT
 public:
-    explicit parser(const QStringList& deploy, QObject *parent = nullptr);
+    explicit parser(const QStringList& deploy, const QPair<QString, QString>& frame_pair, QObject *parent = nullptr);
 
     enum idx_deploy{
-        deploy_type = 0,
-        deploy_byte_order,
+        deploy_byte_order = 0,
         deploy_bit_order
     };
 
@@ -37,7 +37,7 @@ public:
                 }
             }
         }
-        if(_isLittleEndain){
+        if(!_isLittleEndain){
             return ((crc >> 8) & 0xFF) | ((crc << 8) & 0xFF00);
         }
         return crc;
@@ -52,15 +52,61 @@ public:
         return hex_byte;
     }
 
-    virtual void get_addr2data() = 0;
+    inline bool is_modbus_rtu(const QByteArray& frame){
+        QByteArray crc_byte = frame.right(2);
+        quint16 crc_value;
+        if(_isLittleEndain){
+            crc_value = qFromLittleEndian<quint16>(reinterpret_cast<const uchar*>(crc_byte.data()));
+        }else{
+            crc_value = qFromBigEndian<quint16>(reinterpret_cast<const uchar*>(crc_byte.data()));
+        }
+        quint16 crc_calu_value = crc_calu(frame.mid(0, frame.size() - 2));
+        if(crc_calu_value == crc_value){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
-signals:
+    inline quint16 bytearray2quint16(const QByteArray& array){
+        if(_isLittleEndain){
+            return qFromLittleEndian<quint16>(reinterpret_cast<const char*>(array.data()));
+        }else{
+            return qFromBigEndian<quint16>(reinterpret_cast<const char*>(array.data()));
+        }
+    }
 
-public:
+    inline quint32 registeraddr2modbusaddr(const quint16& register_addr, const quint8& func_code){
+        if(func_code == 0){
+            return register_addr;
+        }else if(func_code == 1){
+            return register_addr + 100001;
+        }else if(func_code == 3){
+            return register_addr + 400001;
+        }else if(func_code == 4){
+            return register_addr + 300001;
+        }
+        return 0;
+    }
+
+    inline QList<QStringList> get_value(){
+        return this->_all_list;
+    }
+
+    void parse_frame();
+
+
+
+private:
     QString _protocol_type;
     QString _byte_order;
     QString _bit_order;
     bool _isLittleEndain;
+
+    QByteArray _req_frame;
+    QByteArray _rsp_frame;
+
+    QList<QStringList> _all_list;
 };
 
 #endif // PARSER_H

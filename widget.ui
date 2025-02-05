@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -32,30 +35,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="_label_modbus_type">
-        <property name="text">
-         <string>请选择Modbus协议类型</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QComboBox" name="_comboBox_modbus_type"/>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -69,26 +49,26 @@
       </item>
       <item>
        <widget class="QLabel" name="_label_order">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
-         <string>请选择字节端序</string>
+         <string>请选择端序</string>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+       <widget class="QComboBox" name="_comboBox_order">
+        <property name="minimumSize">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>120</width>
+          <height>0</height>
          </size>
         </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QComboBox" name="_comboBox_order"/>
+       </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer_4">
@@ -111,7 +91,17 @@
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_5">
+       <widget class="QComboBox" name="_comboBox_bit_order">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -123,26 +113,7 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QComboBox" name="_comboBox_bit_order"/>
-      </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QPushButton" name="_pushButton_count">
-      <property name="maximumSize">
-       <size>
-        <width>100</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>解析</string>
-      </property>
-     </widget>
     </item>
     <item>
      <layout class="QFormLayout" name="formLayout">
@@ -164,7 +135,7 @@
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>50</height>
+          <height>25</height>
          </size>
         </property>
        </widget>
@@ -178,7 +149,7 @@
          </size>
         </property>
         <property name="text">
-         <string>MODBUS回复帧</string>
+         <string>MODBUS响应帧</string>
         </property>
        </widget>
       </item>
@@ -187,12 +158,12 @@
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>100</height>
+          <height>50</height>
          </size>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="7" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label">
@@ -203,32 +174,30 @@
            </size>
           </property>
           <property name="text">
-           <string>请求帧解析结果</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>响应帧解析结果</string>
+           <string>解析结果</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
-      <item row="6" column="1">
+      <item row="8" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QTableWidget" name="_tableWidget_req"/>
-        </item>
-        <item>
          <widget class="QTableWidget" name="_tableWidget_rsp"/>
+        </item>
+       </layout>
+      </item>
+      <item row="5" column="1">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="_pushButton_count">
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>解析</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

@@ -11,14 +11,10 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     parse/parser.cpp \
-    parse/req_frame_parse.cpp \
-    parse/rsp_frame_parse.cpp \
     widget.cpp
 
 HEADERS += \
     parse/parser.h \
-    parse/req_frame_parse.h \
-    parse/rsp_frame_parse.h \
     widget.h
 
 FORMS += \
